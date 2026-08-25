@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XAUUSD — SMC pre-trade checklist</title>
+<style>
+  :root{
+    --bg:#f4f3f0;
+    --panel:#ffffff;
+    --panel-alt:#f7f6f3;
+    --line:#dedad0;
+    --line-soft:#e8e5dd;
+    --gold:#b4881c;
+    --gold-bright:#8f6a15;
+    --ink:#1c1c1a;
+    --ink-dim:#68655c;
+    --ink-faint:#a6a196;
+    --green:#3f7a52;
+    --green-bg:#eaf3ec;
+    --amber:#b06a1f;
+    --amber-bg:#faf0e2;
+    --red:#a8352e;
+    --red-bg:#fbeceb;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'JetBrains Mono','SF Mono',Consolas,'Courier New',monospace;
+    display:flex;
+    justify-content:center;
+    padding:28px 14px 60px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .ticket{
+    width:100%;
+    max-width:460px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 1px 3px rgba(28,28,26,0.06), 0 8px 24px rgba(28,28,26,0.05);
+  }
+
+  /* HEADER */
+  .head{
+    padding:20px 22px 16px;
+    border-bottom:1px dashed var(--line);
+    position:relative;
+  }
+  .eyebrow{
+    font-size:10px;
+    letter-spacing:.18em;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin:0 0 6px;
+  }
+  .pair-row{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .pair{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:700;
+    font-size:26px;
+    letter-spacing:.02em;
+    margin:0;
+    color:var(--ink);
+  }
+  .sub{
+    font-size:11px;
+    color:var(--ink-dim);
+    margin:4px 0 0;
+    letter-spacing:.03em;
+  }
+
+  /* GAUGE */
+  .gauge{
+    width:64px;height:64px;flex:0 0 auto;position:relative;
+  }
+  .gauge svg{transform:rotate(-90deg);width:64px;height:64px;}
+  .gauge circle{fill:none;stroke-width:6;}
+  .gauge .track{stroke:var(--line);}
+  .gauge .fill{stroke:var(--ink-faint);stroke-linecap:round;transition:stroke-dashoffset .25s ease, stroke .25s ease;}
+  .gauge-label{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .gauge-count{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:17px;line-height:1;}
+  .gauge-total{font-size:8px;color:var(--ink-faint);letter-spacing:.05em;}
+
+  /* SECTIONS */
+  .section{
+    padding:14px 22px;
+    border-bottom:1px dashed var(--line);
+  }
+  .section:last-of-type{border-bottom:none;}
+  .section-title{
+    display:flex;align-items:center;gap:8px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    margin:0 0 10px;
+  }
+  .section-title .mark{
+    width:5px;height:5px;background:var(--gold);border-radius:1px;flex:0 0 auto;
+  }
+
+  .item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:6px 0;
+    cursor:pointer;
+    user-select:none;
+  }
+  .box{
+    width:16px;height:16px;
+    border:1.5px solid var(--ink-faint);
+    border-radius:3px;
+    flex:0 0 auto;
+    margin-top:1px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .15s ease, background .15s ease;
+    position:relative;
+  }
+  .box svg{width:10px;height:10px;opacity:0;transition:opacity .1s ease;}
+  .item.hard .box{border-color:#5a4a26;}
+  .item input{position:absolute;opacity:0;width:0;height:0;pointer-events:none;}
+  .item.checked .box{background:var(--gold);border-color:var(--gold);}
+  .item.checked .box svg{opacity:1;}
+  .item.checked .box svg path{stroke:#141414;}
+  .label{
+    font-size:13px;
+    line-height:1.4;
+    color:var(--ink);
+  }
+  .item.checked .label{color:var(--ink-dim);}
+  .hard-flag{
+    font-size:9px;
+    color:#8a6a1f;
+    letter-spacing:.06em;
+    margin-left:6px;
+    vertical-align:1px;
+  }
+
+  /* ONE LINER */
+  .flow{
+    padding:14px 22px;
+    background:var(--panel-alt);
+    border-bottom:1px dashed var(--line);
+  }
+  .flow-title{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 6px;
+  }
+  .flow-line{
+    font-size:11px;
+    color:var(--ink-dim);
+    letter-spacing:.02em;
+    line-height:1.6;
+  }
+  .flow-line b{color:var(--gold-bright);font-weight:600;}
+
+  /* VERDICT */
+  .verdict{
+    padding:18px 22px 20px;
+    text-align:center;
+    transition:background .2s ease;
+  }
+  .verdict-label{
+    font-size:10px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 8px;
+  }
+  .verdict-status{
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:700;
+    font-size:24px;
+    letter-spacing:.04em;
+    margin:0 0 6px;
+    transition:color .2s ease;
+  }
+  .verdict-detail{
+    font-size:11px;
+    color:var(--ink-dim);
+    min-height:14px;
+  }
+  .verdict-detail.hard-block{color:var(--red);}
+
+  /* CONTROLS */
+  .controls{
+    display:flex;
+    gap:1px;
+    background:var(--line);
+  }
+  .controls button{
+    flex:1;
+    background:var(--panel);
+    color:var(--ink-dim);
+    border:none;
+    padding:13px 0;
+    font-family:'JetBrains Mono','SF Mono',Consolas,monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .controls button:hover{background:var(--panel-alt);color:var(--ink);}
+  .controls button:active{background:#0f1114;}
+
+  @media print{
+    body{background:#fff;color:#000;padding:0;}
+    .ticket{max-width:100%;border:none;}
+    .gauge, .controls{display:none;}
+    .head{border-bottom:1px solid #000;}
+    .section, .flow{border-bottom:1px dashed #999;}
+    .pair, .verdict-status, .section-title, .flow-title{color:#000 !important;}
+    .box{background:#fff !important;border-color:#000 !important;}
+    .box svg{display:none;}
+    .label{color:#000 !important;}
+    .verdict{background:#fff !important;}
+    .sub, .ink-dim, .flow-line, .verdict-label, .verdict-detail{color:#333 !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ticket">
+
+  <div class="head">
+    <div class="pair-row">
+      <div>
+        <p class="eyebrow">SMC pre-trade checklist</p>
+        <p class="pair">XAUUSD</p>
+        <p class="sub">Tick beside the chart before BUY / SELL</p>
+      </div>
+      <div class="gauge">
+        <svg viewBox="0 0 64 64">
+          <circle class="track" cx="32" cy="32" r="27"></circle>
+          <circle id="gaugeFill" class="fill" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="169.6"></circle>
+        </svg>
+        <div class="gauge-label">
+          <div class="gauge-count" id="gaugeCount">0</div>
+          <div class="gauge-total">/ 16</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" data-section="context">
+    <p class="section-title"><span class="mark"></span>Market context</p>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Liquidity identified — PDH / PDL, EQH / EQL, session H/L, swing H/L</span></label>
+    <label class="item" data-hard="1"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Liquidity swept<span class="hard-flag">required</span></span></label>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Direction clear — bullish / bearish</span></label>
+  </div>
+
+  <div class="section" data-section="structure">
+    <p class="section-title"><span class="mark"></span>Structure</p>
+    <label class="item" data-hard="1"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Strong displacement<span class="hard-flag">required</span></span></label>
+    <label class="item" data-hard="1"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">MSS / BOS confirmed<span class="hard-flag">required</span></span></label>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">No conflicting higher-timeframe structure</span></label>
+  </div>
+
+  <div class="section" data-section="poi">
+    <p class="section-title"><span class="mark"></span>POI</p>
+    <label class="item" data-hard="1"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Valid POI identified — OB / FVG / IFVG / breaker<span class="hard-flag">required</span></span></label>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">POI is fresh / meaningful</span></label>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Price is in the correct premium / discount area</span></label>
+  </div>
+
+  <div class="section" data-section="entry">
+    <p class="section-title"><span class="mark"></span>Entry</p>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Price retraced into POI</span></label>
+    <label class="item" data-hard="1"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Entry confirmation received<span class="hard-flag">required</span></span></label>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">No chasing price</span></label>
+  </div>
+
+  <div class="section" data-section="risk">
+    <p class="section-title"><span class="mark"></span>Risk</p>
+    <label class="item" data-hard="1"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Logical SL identified<span class="hard-flag">required</span></span></label>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Risk amount calculated before entry</span></label>
+    <label class="item" data-hard="1"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">RR &ge; 1:2<span class="hard-flag">required</span></span></label>
+    <label class="item" data-hard="0"><input type="checkbox"><span class="box"><svg viewBox="0 0 10 10"><path d="M1 5l2.5 2.5L9 2" stroke="#141414" stroke-width="1.6" fill="none"/></svg></span><span class="label">Target = logical liquidity</span></label>
+  </div>
+
+  <div class="flow">
+    <p class="flow-title">One-line version</p>
+    <p class="flow-line"><b>LS</b> &rarr; <b>Sweep</b> &rarr; <b>Displacement</b> &rarr; <b>MSS/BOS</b> &rarr; <b>POI</b> &rarr; <b>Retrace</b> &rarr; <b>Confirm</b> &rarr; <b>SL</b> &rarr; <b>RR</b> &rarr; <b>ENTER</b><br>No sequence = no trade.</p>
+  </div>
+
+  <div class="verdict" id="verdict">
+    <p class="verdict-label">Final decision</p>
+    <p class="verdict-status" id="verdictStatus">❌ NO TRADE</p>
+    <p class="verdict-detail" id="verdictDetail">0 / 16 ticked</p>
+  </div>
+
+  <div class="controls">
+    <button id="resetBtn">Reset</button>
+    <button id="printBtn">Print</button>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var items = Array.prototype.slice.call(document.querySelectorAll('.item'));
+  var total = items.length;
+  var CIRC = 169.6;
+
+  var gaugeFill = document.getElementById('gaugeFill');
+  var gaugeCount = document.getElementById('gaugeCount');
+  var verdict = document.getElementById('verdict');
+  var verdictStatus = document.getElementById('verdictStatus');
+  var verdictDetail = document.getElementById('verdictDetail');
+
+  function colors(state){
+    if(state === 'trade') return {main:'#4c9a6a', bg:'#132019'};
+    if(state === 'wait') return {main:'#d98e3b', bg:'#231a0e'};
+    return {main:'#c1443c', bg:'#241211'};
+  }
+
+  function update(){
+    var checked = items.filter(function(it){ return it.classList.contains('checked'); });
+    var count = checked.length;
+    var hardMissing = items.filter(function(it){
+      return it.dataset.hard === '1' && !it.classList.contains('checked');
+    }).length;
+
+    gaugeCount.textContent = count;
+    var offset = CIRC - (CIRC * count / total);
+    gaugeFill.style.strokeDashoffset = offset;
+
+    var state, statusText;
+    if(hardMissing > 0){
+      state = 'block';
+      statusText = '❌ NO TRADE';
+    } else if(count >= 11){
+      state = 'trade';
+      statusText = '✅ A+ SETUP — TRADE';
+    } else if(count >= 8){
+      state = 'wait';
+      statusText = '⏳ WAIT — MISSING CONFIRMATION';
+    } else {
+      state = 'block';
+      statusText = '❌ NO TRADE';
+    }
+
+    var c = colors(state);
+    gaugeFill.style.stroke = c.main;
+    verdictStatus.style.color = c.main;
+    verdict.style.background = c.bg;
+    verdictStatus.textContent = statusText;
+
+    if(hardMissing > 0){
+      verdictDetail.textContent = hardMissing + ' hard rule' + (hardMissing > 1 ? 's' : '') + ' unmet — ' + count + ' / ' + total + ' ticked';
+      verdictDetail.classList.add('hard-block');
+    } else {
+      verdictDetail.textContent = count + ' / ' + total + ' ticked';
+      verdictDetail.classList.remove('hard-block');
+    }
+  }
+
+  items.forEach(function(it){
+    var input = it.querySelector('input');
+    it.addEventListener('click', function(e){
+      e.preventDefault();
+      it.classList.toggle('checked');
+      input.checked = it.classList.contains('checked');
+      update();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    items.forEach(function(it){
+      it.classList.remove('checked');
+      it.querySelector('input').checked = false;
+    });
+    update();
+  });
+
+  document.getElementById('printBtn').addEventListener('click', function(){
+    window.print();
+  });
+
+  update();
+})();
+</script>
+
+</body>
+</html>
